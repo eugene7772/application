@@ -5,6 +5,8 @@ import com.creditpipeline.application.dto.LoanOfferDTO;
 import com.creditpipeline.application.feign.FeignServiceUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -19,6 +21,7 @@ import java.util.List;
 public class ApplicationController {
 
     private final FeignServiceUtil feignServiceUtil;
+    private final static Logger logger = LogManager.getLogger(ApplicationController.class);
 
     @Autowired
     public ApplicationController(FeignServiceUtil feignServiceUtil) {
@@ -30,6 +33,7 @@ public class ApplicationController {
             summary = "Прескоринг + запрос на расчёт возможных условий кредита")
     public List<LoanOfferDTO> PrescoringAndRequestForCalculation(@RequestBody @Validated LoanApplicationRequestDTO loanApplicationRequestDTO) {
 
+        logger.debug("Return offers");
         return feignServiceUtil.getOffers(loanApplicationRequestDTO);
 
     }
@@ -39,6 +43,7 @@ public class ApplicationController {
             summary = " Выбор одного из предложений")
     public void choiceOffer(@RequestBody @Validated LoanOfferDTO loanOfferDTO) {
 
+        logger.debug("Post to MC http://localhost:8090/deal/offer");
         feignServiceUtil.choiceOffer(loanOfferDTO);
 
     }
