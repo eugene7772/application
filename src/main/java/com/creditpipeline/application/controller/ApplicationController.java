@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +32,7 @@ public class ApplicationController {
     @PostMapping(value = "/application")
     @Operation(
             summary = "Прескоринг + запрос на расчёт возможных условий кредита")
-    public List<LoanOfferDTO> PrescoringAndRequestForCalculation(@RequestBody @Validated LoanApplicationRequestDTO loanApplicationRequestDTO) {
+    public List<LoanOfferDTO> PrescoringAndRequestForCalculation(@RequestBody @Validated ResponseEntity<LoanApplicationRequestDTO> loanApplicationRequestDTO) {
 
         logger.debug("Return offers");
         return feignServiceUtil.getOffers(loanApplicationRequestDTO);
@@ -41,7 +42,7 @@ public class ApplicationController {
     @PutMapping(value = "/application/offer")
     @Operation(
             summary = " Выбор одного из предложений")
-    public void choiceOffer(@RequestBody @Validated LoanOfferDTO loanOfferDTO) {
+    public void choiceOffer(@RequestBody @Validated ResponseEntity<LoanOfferDTO> loanOfferDTO) {
 
         logger.debug("Post to MC http://localhost:8090/deal/offer");
         feignServiceUtil.choiceOffer(loanOfferDTO);
