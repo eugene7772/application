@@ -7,13 +7,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
+import java.util.Optional;
 
 @FeignClient(url = "http://localhost:8090/deal")
 public interface FeignServiceUtil {
 
     @PostMapping("/application")
-    List<LoanOfferDTO> getOffers(ResponseEntity<LoanApplicationRequestDTO> loanApplicationRequestDTO);
+    List<LoanOfferDTO> getOffers(LoanApplicationRequestDTO loanApplicationRequestDTO);
 
     @PostMapping("/offer")
-    void choiceOffer(ResponseEntity<LoanOfferDTO> loanOfferDTO);
+    void choiceOffer(LoanOfferDTO loanOfferDTO);
 }

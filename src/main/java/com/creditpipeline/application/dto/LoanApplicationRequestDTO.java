@@ -11,7 +11,6 @@ import javax.validation.constraints.Email;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Data
 @Schema(description = "Сущность заявки на получение кредита")
 public class LoanApplicationRequestDTO {
 

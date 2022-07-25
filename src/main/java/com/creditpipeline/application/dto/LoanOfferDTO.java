@@ -5,7 +5,6 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 
-@Data
 @Schema(description = "Сущность кредитного предложения")
 public class LoanOfferDTO {
 

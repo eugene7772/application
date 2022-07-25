@@ -20,6 +20,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -59,8 +60,8 @@ public class ApplicationControllerTest {
         loanApplicationRequestDTO.setPassportSeries("2014");
         loanApplicationRequestDTO.setPassportNumber("289543");
 
-        Mockito.when(feignServiceUtil.getOffers(ResponseEntity.ok(loanApplicationRequestDTO))).thenReturn(offerDTOS);
-        List<LoanOfferDTO> offers = applicationController.PrescoringAndRequestForCalculation(ResponseEntity.ok(loanApplicationRequestDTO));
+        Mockito.when(feignServiceUtil.getOffers(loanApplicationRequestDTO)).thenReturn(offerDTOS);
+        List<LoanOfferDTO> offers = applicationController.PrescoringAndRequestForCalculation(Optional.of(loanApplicationRequestDTO));
 
         Assertions.assertEquals(ResponseEntity.ok(offerDTOS).getStatusCode(), HttpStatus.OK);
         Assertions.assertEquals(ResponseEntity.ok(offers).getStatusCode(), HttpStatus.OK);
@@ -76,7 +77,7 @@ public class ApplicationControllerTest {
         loanOfferDTO.setRequestedAmount(BigDecimal.valueOf(500000));
         loanOfferDTO.setTotalAmount(BigDecimal.valueOf(500000));
 
-        applicationController.choiceOffer(ResponseEntity.ok(loanOfferDTO));
+        applicationController.choiceOffer(Optional.of(loanOfferDTO));
 
     }
 
